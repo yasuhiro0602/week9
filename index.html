@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会員登録フォーム</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">会員登録</h2>
+
+   
+    <form id="registerForm" novalidate>
+      
+    
+      <div class="mb-4">
+        <label for="name" class="block text-gray-700 font-semibold mb-2">お名前</label>
+        <input type="text" id="name" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500">
+     
+        <p id="nameError" class="text-red-500 text-sm mt-1 hidden"></p>
+      </div>
+
+      
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 font-semibold mb-2">メールアドレス</label>
+        <input type="email" id="email" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500">
+        <p id="emailError" class="text-red-500 text-sm mt-1 hidden"></p>
+      </div>
+
+      
+      <div class="mb-4">
+        <label for="password" class="block text-gray-700 font-semibold mb-2">パスワード (8文字以上)</label>
+        <input type="password" id="password" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500">
+        <p id="passwordError" class="text-red-500 text-sm mt-1 hidden"></p>
+      </div>
+
+     
+      <div class="mb-6">
+        <label for="confirmPassword" class="block text-gray-700 font-semibold mb-2">パスワード (確認用)</label>
+        <input type="password" id="confirmPassword" required class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500">
+        <p id="confirmPasswordError" class="text-red-500 text-sm mt-1 hidden"></p>
+      </div>
+
+     
+      <div class="mb-6">
+        <label class="flex items-center cursor-pointer">
+          <input type="checkbox" id="terms" required class="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+          <span class="text-gray-700 text-sm">利用規約に同意する</span>
+        </label>
+        <p id="termsError" class="text-red-500 text-sm mt-1 hidden"></p>
+      </div>
+<!-- 送信ボタン -->
+      <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition duration-200">
+        送信する
+      </button>
+
+     
+      <p id="successMessage" class="text-green-500 font-bold text-center mt-4 hidden">登録完了！</p>
+
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+    
+      event.preventDefault();
+
+     
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const terms = document.getElementById('terms').checked;
+
+     
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      const confirmPasswordError = document.getElementById('confirmPasswordError');
+      const termsError = document.getElementById('termsError');
+      const successMessage = document.getElementById('successMessage');
+
+     
+      nameError.classList.add('hidden');
+      emailError.classList.add('hidden');
+      passwordError.classList.add('hidden');
+      confirmPasswordError.classList.add('hidden');
+      termsError.classList.add('hidden');
+      successMessage.classList.add('hidden');
+
+      let hasError = false;
+
+      
+
+      
+      if (!name) {
+        nameError.textContent = '名前を入力してください。';
+        nameError.classList.remove('hidden');
+        hasError = true;
+      }
+
+     
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email) {
+        emailError.textContent = 'メールアドレスを入力してください。';
+        emailError.classList.remove('hidden');
+        hasError = true;
+      } else if (!emailPattern.test(email)) {
+        emailError.textContent = '正しいメールアドレスの形式で入力してください。';
+        emailError.classList.remove('hidden');
+        hasError = true;
+      }
+
+      
+      if (!password) {
+        passwordError.textContent = 'パスワードを入力してください。';
+        passwordError.classList.remove('hidden');
+        hasError = true;
+      } else if (password.length < 8) {
+        passwordError.textContent = 'パスワードは8文字以上で入力してください。';
+        passwordError.classList.remove('hidden');
+        hasError = true;
+      }
+
+    
+      if (password !== confirmPassword) {
+        confirmPasswordError.textContent = 'パスワードが一致しません。';
+        confirmPasswordError.classList.remove('hidden');
+        hasError = true;
+      }
+
+      
+      if (!terms) {
+        termsError.textContent = '利用規約に同意してください。';
+        termsError.classList.remove('hidden');
+        hasError = true;
+      }
+
+    
+      if (!hasError) {
+        successMessage.classList.remove('hidden');
+       
+    });
+  </script>
+</body>
+</html>
